@@ -1,3 +1,4 @@
+from academic_supervisor.agents import grammar as grammar_agent
 from academic_supervisor.graph.state import SupervisorState
 
 
@@ -28,8 +29,13 @@ def run_rule_engine(state: SupervisorState) -> SupervisorState:
 
 
 def run_grammar_agent(state: SupervisorState) -> SupervisorState:
-    """Placeholder for issue #21: LLM-based grammar review."""
-    return _mark(state, "run_grammar_agent")
+    """Issue #21: LLM-based grammar review, sentence-level, snippets only."""
+    paragraphs = state.get("parsed_paragraphs", [])
+    result = _mark(state, "run_grammar_agent")
+    if paragraphs:
+        llm = grammar_agent.build_grammar_llm()
+        result["issues"] = grammar_agent.run_grammar_agent(paragraphs, llm)
+    return result
 
 
 def run_clarity_agent(state: SupervisorState) -> SupervisorState:
