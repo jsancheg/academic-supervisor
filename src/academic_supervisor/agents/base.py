@@ -1,6 +1,7 @@
 import json
 from typing import Callable
 
+from academic_supervisor.agents.guardrail import enforce_snippet_only
 from academic_supervisor.agents.prompts import build_prompt
 from academic_supervisor.agents.schema import AgentSource, ReviewIssue
 
@@ -20,7 +21,8 @@ def run_agent(
     prompt = build_prompt(role_instructions, paragraph, paragraph_index, context)
     raw_response = invoke(prompt)
 
-    return _parse_issues(raw_response, source, paragraph_index)
+    issues = _parse_issues(raw_response, source, paragraph_index)
+    return enforce_snippet_only(issues, paragraph)
 
 
 def _parse_issues(
