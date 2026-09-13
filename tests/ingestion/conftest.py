@@ -1,11 +1,11 @@
-import fitz
+import pymupdf
 import pytest
 
 
 @pytest.fixture
 def make_pdf():
     def _make(pages: list[list[str]]) -> bytes:
-        doc = fitz.open()
+        doc = pymupdf.open()
         for lines in pages:
             page = doc.new_page()
             y = 72
