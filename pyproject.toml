@@ -1,0 +1,24 @@
+[project]
+name = "academic-supervisor"
+version = "0.1.0"
+description = "Fully local, Streamlit-based academic writing supervisor (rule engine + multi-agent LLM review)"
+requires-python = ">=3.11"
+dependencies = [
+    "streamlit>=1.38",
+    "langgraph>=0.2",
+    "langchain-core>=0.3",
+    "langchain-ollama>=0.2",
+    "pymupdf>=1.24",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
